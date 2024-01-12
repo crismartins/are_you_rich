@@ -5,6 +5,7 @@ import 'package:are_you_rich/constants.dart';
 import 'package:lottie/lottie.dart';
 import 'package:are_you_rich/components/cta_button.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:are_you_rich/components/app_info.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -49,13 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
           kAppTitle,
         ),
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              PhosphorIconsRegular.info,
-              color: Colors.white.withOpacity(0.4),
-            ),
-          ),
+          AppInfo(),
         ],
       ),
       body: Container(
