@@ -82,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               'Here are a few considerations:',
                             ),
                             // Text(aspectsBrain.getAspect()),
-                            aspectsBrain.getAllAspects(),
+                            aspectsBrain.getAllAspectsHome(),
                             const SizedBox(height: 80.0),
                           ],
                         ),
