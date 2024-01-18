@@ -1,4 +1,6 @@
+import 'package:are_you_rich/rich_aspects_brain.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'screens/splash_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/quiz_screen.dart';
@@ -6,7 +8,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'constants.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => RichAspectsBrain(),
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -33,6 +38,24 @@ class MyApp extends StatelessWidget {
           labelLarge: GoogleFonts.fredoka(
             fontSize: 20.0,
             fontWeight: FontWeight.w400,
+          ),
+        ),
+        tabBarTheme: TabBarTheme(
+          labelColor: Colors.white,
+          dividerColor: Colors.transparent,
+          labelStyle: GoogleFonts.fredoka(
+            fontSize: 14.0,
+            fontWeight: FontWeight.w400,
+          ),
+          unselectedLabelStyle: GoogleFonts.fredoka(
+            fontSize: 14.0,
+            color: Colors.white.withOpacity(0.4),
+          ),
+          indicator: UnderlineTabIndicator(
+            borderSide: BorderSide.none,
+          ),
+          overlayColor: MaterialStatePropertyAll(
+            Colors.white.withOpacity(0.1),
           ),
         ),
         textButtonTheme: TextButtonThemeData(
