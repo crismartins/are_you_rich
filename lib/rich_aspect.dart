@@ -6,13 +6,15 @@ class RichAspect {
   String aspectText;
   String aspectImg;
   bool? aspectChecker;
+  String? buttonStatus;
 
   RichAspect(
       {required this.aspectTitle,
       this.aspectIcon,
       required this.aspectText,
       required this.aspectImg,
-      this.aspectChecker});
+      this.aspectChecker,
+      this.buttonStatus});
 
   void isYes() {
     aspectChecker = true;

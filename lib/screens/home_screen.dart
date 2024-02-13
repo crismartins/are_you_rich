@@ -6,6 +6,7 @@ import 'package:lottie/lottie.dart';
 import 'package:are_you_rich/components/cta_button.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:are_you_rich/components/app_info.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -38,6 +39,11 @@ class _HomeScreenState extends State<HomeScreen> {
       },
     );
     super.initState();
+    initialization();
+  }
+
+  void initialization() async {
+    FlutterNativeSplash.remove();
   }
 
   @override
@@ -46,6 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: kBgColor,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text(
           kAppTitle,
         ),

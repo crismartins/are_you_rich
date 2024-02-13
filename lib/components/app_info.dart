@@ -22,7 +22,7 @@ class AppInfo extends StatelessWidget {
           context: context,
           builder: (context) => Container(
             padding: const EdgeInsets.all(20.0),
-            height: 262,
+            height: 270,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisSize: MainAxisSize.max,

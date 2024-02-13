@@ -1,4 +1,5 @@
 import 'package:are_you_rich/constants.dart';
+import 'package:are_you_rich/screens/finish_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
@@ -7,24 +8,73 @@ import 'rich_aspect.dart';
 
 class RichAspectsBrain extends ChangeNotifier {
   int _aspectIndex = 0;
+  String resultStatus = '';
   int get aspectSelected => _aspectIndex;
 
   final List<RichAspect> _aspectsData = [
     RichAspect(
       aspectTitle: 'FINANCIAL GOALS',
-      aspectIcon: const Icon(PhosphorIconsLight.coin, size: 40.0),
+      aspectIcon: const Icon(PhosphorIconsLight.coins, size: 40.0),
       aspectText:
           'Evaluate whether you\'ve achieved your financial goals, such as saving for retirement, owning a home, or funding education. If you\'ve met these objectives, you might be in a comfortable financial position.',
-      aspectChecker: null,
+      aspectChecker: false,
+      buttonStatus: '',
       aspectImg: 'images/bg_1.png',
     ),
     RichAspect(
       aspectTitle: 'INCOME VS. EXPENSES',
       aspectIcon: const Icon(PhosphorIconsLight.calculator, size: 40.0),
       aspectText:
-          'Evaluate whether you\'ve achieved your financial goals, such as saving for retirement, owning a home, or funding education. If you\'ve met these objectives, you might be in a comfortable financial position.',
-      aspectChecker: null,
-      aspectImg: 'images/bg_1.png',
+          'Compare your income to your expenses. If you consistently have money left over after covering your bills and saving for the future, you may be in a stable financial situation.',
+      aspectChecker: false,
+      buttonStatus: '',
+      aspectImg: 'images/bg_2.png',
+    ),
+    RichAspect(
+      aspectTitle: 'NET WORTH',
+      aspectIcon:
+          const Icon(PhosphorIconsLight.currencyCircleDollar, size: 40.0),
+      aspectText:
+          'Calculate your net worth by subtracting your liabilities (debts) from your assets (savings, investments, property). A positive net worth suggests financial health.',
+      aspectChecker: false,
+      buttonStatus: '',
+      aspectImg: 'images/bg_3.png',
+    ),
+    RichAspect(
+      aspectTitle: 'QUALITY OF LIFE',
+      aspectIcon: const Icon(PhosphorIconsLight.smiley, size: 40.0),
+      aspectText:
+          'Consider your overall quality of life. If you can afford the lifestyle you desire without constant financial stress, you may feel financially secure.',
+      aspectChecker: false,
+      buttonStatus: '',
+      aspectImg: 'images/bg_4.png',
+    ),
+    RichAspect(
+      aspectTitle: 'EMERGENCY FUND',
+      aspectIcon: const Icon(PhosphorIconsLight.piggyBank, size: 40.0),
+      aspectText:
+          'Having an emergency fund to cover unexpected expenses is a sign of financial stability. Experts often recommend saving three to six months\' worth of living expenses.',
+      aspectChecker: false,
+      buttonStatus: '',
+      aspectImg: 'images/bg_5.png',
+    ),
+    RichAspect(
+      aspectTitle: 'INVESTMENTS',
+      aspectIcon: const Icon(PhosphorIconsLight.chartBar, size: 40.0),
+      aspectText:
+          'If you\'re actively investing and growing your wealth, it may be an indicator of financial success.',
+      aspectChecker: false,
+      buttonStatus: '',
+      aspectImg: 'images/bg_6.png',
+    ),
+    RichAspect(
+      aspectTitle: 'FINANCIAL FREEDOM',
+      aspectIcon: const Icon(PhosphorIconsLight.sunglasses, size: 40.0),
+      aspectText:
+          'Assess whether you have the freedom to make choices based on your preferences rather than financial constraints. This includes the ability to pursue passions, travel, or take time off work.',
+      aspectChecker: false,
+      buttonStatus: '',
+      aspectImg: 'images/bg_7.png',
     ),
   ];
 
@@ -70,17 +120,16 @@ class RichAspectsBrain extends ChangeNotifier {
     return tabs;
   }
 
-  void selectOption(index, controller) {
+  void selectOption(index, controller, context) {
     _aspectIndex = index;
-    print(index);
     if (index < _aspectsData.length - 1) {
       controller.animateTo(aspectSelected + 1);
     } else {
-      print('Finished!');
+      Navigator.pushNamed(context, FinishScreen.id);
     }
   }
 
-  List<Container> getAllAspectsTabsContent(controller) {
+  List<Container> getAllAspectsTabsContent(controller, context) {
     List<Container> tabsContent = [];
     for (var i = 0; i < _aspectsData.length; i++) {
       tabsContent.add(
@@ -101,6 +150,9 @@ class RichAspectsBrain extends ChangeNotifier {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       _aspectsData[i].aspectIcon ?? const Icon(Icons.add),
+                      SizedBox(
+                        height: 12.0,
+                      ),
                       Text(
                         _aspectsData[i].aspectText,
                         textAlign: TextAlign.center,
@@ -124,11 +176,13 @@ class RichAspectsBrain extends ChangeNotifier {
                       child: CheckButton(
                         isYes: false,
                         onPressed: () {
-                          selectOption(i, controller);
+                          selectOption(i, controller, context);
                           _aspectsData[i].aspectChecker = false;
-                          print(_aspectsData[i].aspectChecker);
+                          _aspectsData[i].buttonStatus = 'no';
+                          quizResults();
                           notifyListeners();
                         },
+                        isSelected: _aspectsData[i].buttonStatus == 'no',
                       ),
                     ),
                     const SizedBox(
@@ -138,11 +192,13 @@ class RichAspectsBrain extends ChangeNotifier {
                       child: CheckButton(
                         isYes: true,
                         onPressed: () {
-                          selectOption(i, controller);
+                          selectOption(i, controller, context);
                           _aspectsData[i].aspectChecker = true;
-                          print(_aspectsData[i].aspectChecker);
+                          _aspectsData[i].buttonStatus = 'yes';
+                          quizResults();
                           notifyListeners();
                         },
+                        isSelected: _aspectsData[i].buttonStatus == 'yes',
                       ),
                     ),
                   ],
@@ -154,5 +210,24 @@ class RichAspectsBrain extends ChangeNotifier {
       );
     }
     return tabsContent;
+  }
+
+  void quizResults() {
+    final resultsArray = _aspectsData.map((e) => e.aspectChecker);
+    final positiveQuestions =
+        resultsArray.where((question) => question == true).length;
+    if (positiveQuestions == _aspectsData.length) {
+      resultStatus = 'Rich';
+    } else if (positiveQuestions == 0) {
+      resultStatus = 'Poor';
+    } else {
+      resultStatus = 'Almost';
+    }
+  }
+
+  void restartQuiz() {
+    _aspectsData.forEach((status) => status.buttonStatus = '');
+    _aspectsData.forEach((checked) => checked.aspectChecker = false);
+    notifyListeners();
   }
 }

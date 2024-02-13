@@ -33,3 +33,9 @@ flutter:
   assets:
     - images/
 
+flutter_native_splash:
+  color: "#13110E"
+  image: images/are_you_rich_title.png
+  android: true
+  ios: true
+

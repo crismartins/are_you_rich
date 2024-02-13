@@ -1,13 +1,17 @@
 import 'package:are_you_rich/rich_aspects_brain.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:are_you_rich/screens/finish_screen.dart';
+import 'package:are_you_rich/screens/result_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'screens/splash_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/quiz_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'constants.dart';
 
 void main() {
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   runApp(ChangeNotifierProvider(
     create: (context) => RichAspectsBrain(),
     child: const MyApp(),
@@ -80,9 +84,10 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: HomeScreen.id,
       routes: {
-        SplashScreen.id: (context) => SplashScreen(),
         HomeScreen.id: (context) => HomeScreen(),
         QuizScreen.id: (context) => QuizScreen(),
+        FinishScreen.id: (context) => FinishScreen(),
+        ResultScreen.id: (context) => ResultScreen(),
       },
     );
   }

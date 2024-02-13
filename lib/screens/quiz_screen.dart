@@ -63,7 +63,7 @@ class _QuizScreenState extends State<QuizScreen>
           ),
           body: TabBarView(
             controller: _tabController,
-            children: value.getAllAspectsTabsContent(_tabController),
+            children: value.getAllAspectsTabsContent(_tabController, context),
           ),
         ),
       ),
